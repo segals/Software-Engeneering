@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<!--
+    Login screen layout for the GCM system.
+    Controller: LoginController
+
+    Elements:
+    - username: TextField where user types their email
+    - errorLabel: Label that shows "user or password do not match" in red on failed login
+    - password: PasswordField where user types their password (text is hidden)
+    - login button: triggers handleLogin() in LoginController
+-->
+<AnchorPane prefHeight="300.0" prefWidth="350.0"
+            xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="gcm.LoginController">
+
+    <!-- Username input field -->
+    <TextField fx:id="username"
+               layoutX="30.0" layoutY="60.0"
+               prefWidth="290.0"
+               promptText="username" />
+
+    <!-- Error label — empty at start, shown in red when login fails -->
+    <Label fx:id="errorLabel"
+           layoutX="30.0" layoutY="95.0"
+           prefWidth="290.0"
+           style="-fx-text-fill: red;" />
+
+    <!-- Password input field — text is hidden -->
+    <PasswordField fx:id="password"
+                   layoutX="30.0" layoutY="120.0"
+                   prefWidth="290.0"
+                   promptText="password" />
+
+    <!-- Login button — calls handleLogin() when clicked -->
+    <Button text="login"
+            layoutX="145.0" layoutY="175.0"
+            onAction="#handleLogin" />
+
+</AnchorPane>
