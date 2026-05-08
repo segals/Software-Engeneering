@@ -1,47 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<!--
-    Login screen layout for the GCM system.
-    Controller: LoginController
+<StackPane prefHeight="380.0" prefWidth="420.0"
+           style="-fx-background-color: #f0f2f5;"
+           xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="gcm.LoginController">
+    <padding><Insets top="40" right="60" bottom="40" left="60"/></padding>
 
-    Elements:
-    - username: TextField where user types their email
-    - errorLabel: Label that shows "user or password do not match" in red on failed login
-    - password: PasswordField where user types their password (text is hidden)
-    - login button: triggers handleLogin() in LoginController
--->
-<AnchorPane prefHeight="300.0" prefWidth="350.0"
-            xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="gcm.LoginController">
+    <VBox spacing="12" alignment="CENTER_LEFT" fillWidth="true"
+          style="-fx-background-color: white; -fx-border-color: #cccccc; -fx-border-width: 1; -fx-border-radius: 6; -fx-background-radius: 6;">
+        <padding><Insets top="32" right="32" bottom="32" left="32"/></padding>
 
-    <!-- Username input field -->
-    <TextField fx:id="username"
-               layoutX="30.0" layoutY="60.0"
-               prefWidth="290.0"
-               promptText="username" />
+        <Label text="Login"
+               style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #222222;" />
 
-    <!-- Error label — empty at start, shown in red when login fails -->
-    <Label fx:id="errorLabel"
-           layoutX="30.0" layoutY="95.0"
-           prefWidth="290.0"
-           style="-fx-text-fill: red;" />
+        <Label text="Username (email)"
+               style="-fx-font-size: 12px; -fx-text-fill: #555555;" />
+        <TextField fx:id="username" promptText="example@email.com"
+                   maxWidth="Infinity"
+                   style="-fx-font-size: 13px; -fx-padding: 7 10 7 10; -fx-border-color: #cccccc; -fx-border-radius: 4; -fx-background-radius: 4; -fx-background-color: white;" />
 
-    <!-- Password input field — text is hidden -->
-    <PasswordField fx:id="password"
-                   layoutX="30.0" layoutY="120.0"
-                   prefWidth="290.0"
-                   promptText="password" />
+        <Label text="Password"
+               style="-fx-font-size: 12px; -fx-text-fill: #555555;" />
+        <PasswordField fx:id="password" promptText="Password"
+                       maxWidth="Infinity"
+                       style="-fx-font-size: 13px; -fx-padding: 7 10 7 10; -fx-border-color: #cccccc; -fx-border-radius: 4; -fx-background-radius: 4; -fx-background-color: white;" />
 
-    <!-- Login button — calls handleLogin() when clicked -->
-    <Button text="login"
-            layoutX="145.0" layoutY="175.0"
-            onAction="#handleLogin" />
+        <Label fx:id="errorLabel" wrapText="true" maxWidth="Infinity"
+               style="-fx-font-size: 12px; -fx-text-fill: #cc0000;" />
 
-</AnchorPane>
+        <Button fx:id="loginButton" text="Login" maxWidth="Infinity"
+                onAction="#handleLogin"
+                style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 0 8 0; -fx-background-radius: 4; -fx-border-radius: 4; -fx-cursor: hand;" />
+
+    </VBox>
+</StackPane>
