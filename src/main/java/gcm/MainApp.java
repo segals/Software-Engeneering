@@ -60,20 +60,17 @@ public class MainApp extends Application {
                 if (trimmed.isEmpty()) continue;
 
                 String[] parts = trimmed.split("\\s+");
-                if (parts.length < 2) {
-                    System.err.println(trimmed + "\nmissing username or password\n");
-                    continue;
-                }
+                if (parts.length < 2) continue;
 
                 try {
                     users.add(new User(parts[0], parts[1]));
                 } catch (IllegalArgumentException e) {
-                    System.err.println(trimmed + "\n" + e.getMessage() + "\n");
+                    // skip invalid entries silently
                 }
             }
             reader.close();
         } catch (Exception e) {
-            System.err.println("Error reading Users.txt: " + e.getMessage());
+            // ignore file read errors
         }
         return users;
     }
