@@ -13,15 +13,18 @@ import javafx.stage.Stage;
  */
 public class WelcomeController {
 
+    // Set by LoginController before the welcome scene is loaded
     public static String loggedInUsername = "";
 
     @FXML private Label welcomeLabel;
 
+    /** Fills the welcome label with the logged-in user's name once the FXML is ready. */
     @FXML
     public void initialize() {
         welcomeLabel.setText("You are signed in as\n" + loggedInUsername);
     }
 
+    /** Returns the user to the login screen and clears the stored username. */
     @FXML
     private void handleLogout() {
         try {
