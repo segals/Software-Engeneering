@@ -27,12 +27,13 @@ import java.util.Map;
  */
 public class LoginController {
 
+    // Populated by MainApp before the scene is shown
     public static ArrayList<User> users = new ArrayList<>();
 
     private static final int MAX_ATTEMPTS = 3;
-    private static final long LOCKOUT_MS = 10 * 60 * 1000L;
+    private static final long LOCKOUT_MS = 10 * 60 * 1000L; // 10 minutes in milliseconds
 
-    // Keyed by entered username so each account is tracked independently
+    // Static so lockout state persists if the user navigates back to the login screen
     private static final Map<String, Integer> failedAttempts = new HashMap<>();
     private static final Map<String, Long>    lockoutUntil   = new HashMap<>();
 
@@ -41,21 +42,28 @@ public class LoginController {
     @FXML private Label         errorLabel;
     @FXML private Button        loginButton;
 
+    // Ticks every second to update the lockout countdown label
     private Timeline countdownTimer;
 
+    /**
+     * Called when the Login button is clicked.
+     * First checks if the username is currently locked out, then tries to find
+     * a matching user. On success switches to the welcome screen; on failure
+     * increments the attempt counter and locks the account after MAX_ATTEMPTS.
+     */
     @FXML
     private void handleLogin() {
         String enteredUsername = username.getText().trim();
         String enteredPassword = password.getText().trim();
 
-        // Check if this username is currently locked out
+        // If this username is still in its lockout window, refresh the countdown and stop
         Long lockedUntil = lockoutUntil.get(enteredUsername);
         if (lockedUntil != null && System.currentTimeMillis() < lockedUntil) {
             startCountdown(enteredUsername, lockedUntil);
             return;
         }
 
-        // Find matching user
+        // Search for a user whose username and password both match
         User loggedInUser = null;
         for (User u : users) {
             if (u.getUsername().equals(enteredUsername) &&
@@ -66,6 +74,7 @@ public class LoginController {
         }
 
         if (loggedInUser != null) {
+            // Clear any previous failure state for this username
             failedAttempts.remove(enteredUsername);
             lockoutUntil.remove(enteredUsername);
             stopCountdown();
@@ -89,6 +98,7 @@ public class LoginController {
             failedAttempts.put(enteredUsername, attempts);
 
             if (attempts >= MAX_ATTEMPTS) {
+                // Lock the account and start the visual countdown
                 long until = System.currentTimeMillis() + LOCKOUT_MS;
                 lockoutUntil.put(enteredUsername, until);
                 startCountdown(enteredUsername, until);
@@ -99,8 +109,13 @@ public class LoginController {
         }
     }
 
+    /**
+     * Disables the login button and starts a Timeline that updates the error label
+     * every second with the remaining lockout time.
+     * When the lockout expires the button is re-enabled and the state is cleared.
+     */
     private void startCountdown(String lockedUsername, long until) {
-        stopCountdown();
+        stopCountdown(); // cancel any existing timer before starting a new one
         loginButton.setDisable(true);
 
         countdownTimer = new Timeline(new KeyFrame(Duration.seconds(1), e -> {
@@ -127,6 +142,7 @@ public class LoginController {
         showLockout(String.format("Too many failed attempts. Try again in %d:%02d.", mins, secs));
     }
 
+    /** Stops the countdown timer if one is running. */
     private void stopCountdown() {
         if (countdownTimer != null) {
             countdownTimer.stop();
@@ -134,11 +150,13 @@ public class LoginController {
         }
     }
 
+    /** Shows a red error message (wrong credentials / unlocked notice). */
     private void showError(String msg) {
         errorLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #ef233c;");
         errorLabel.setText(msg);
     }
 
+    /** Shows an orange lockout message (account temporarily blocked). */
     private void showLockout(String msg) {
         errorLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #f77f00;");
         errorLabel.setText(msg);
