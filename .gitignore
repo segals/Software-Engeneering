@@ -41,6 +41,8 @@ build/
 
 ### Docs ###
 *.md
+*.pdf
+
 # Personal folders
 Downloads/
 .idea/
