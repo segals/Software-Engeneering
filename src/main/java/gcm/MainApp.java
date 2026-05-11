@@ -63,10 +63,12 @@ public class MainApp extends Application {
             GridPane grid = new GridPane();
             grid.setHgap(12);
             grid.setVgap(10);
-            grid.setPadding(new Insets(20, 150, 10, 10));
+            grid.setPadding(new Insets(10));
 
             TextField nField = new TextField("3");
             TextField tField = new TextField("60");
+            nField.setPrefWidth(80);
+            tField.setPrefWidth(80);
 
             grid.add(new Label("Max failed attempts (n):"), 0, 0);
             grid.add(nField, 1, 0);
@@ -75,6 +77,8 @@ public class MainApp extends Application {
 
             dialog.getDialogPane().setContent(grid);
             dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+            dialog.getDialogPane().setMinHeight(javafx.scene.layout.Region.USE_PREF_SIZE);
+            dialog.setResizable(false);
 
             Optional<ButtonType> result = dialog.showAndWait();
 

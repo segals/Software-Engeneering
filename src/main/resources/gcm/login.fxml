@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<StackPane prefHeight="380.0" prefWidth="420.0"
+<StackPane prefWidth="420.0"
            style="-fx-background-color: #f0f2f5;"
            xmlns="http://javafx.com/javafx"
            xmlns:fx="http://javafx.com/fxml"
@@ -26,18 +26,21 @@
                style="-fx-font-size: 12px; -fx-text-fill: #555555;" />
         <TextField fx:id="username" promptText="example@email.com"
                    maxWidth="Infinity"
+                   onAction="#handleLogin"
                    style="-fx-font-size: 13px; -fx-padding: 7 10 7 10; -fx-border-color: #cccccc; -fx-border-radius: 4; -fx-background-radius: 4; -fx-background-color: white;" />
 
         <Label text="Password"
                style="-fx-font-size: 12px; -fx-text-fill: #555555;" />
         <PasswordField fx:id="password" promptText="Password"
                        maxWidth="Infinity"
+                       onAction="#handleLogin"
                        style="-fx-font-size: 13px; -fx-padding: 7 10 7 10; -fx-border-color: #cccccc; -fx-border-radius: 4; -fx-background-radius: 4; -fx-background-color: white;" />
 
         <Label fx:id="errorLabel" wrapText="true" maxWidth="Infinity"
                style="-fx-font-size: 12px; -fx-text-fill: #cc0000;" />
 
         <Button fx:id="loginButton" text="Login" maxWidth="Infinity"
+                defaultButton="true"
                 onAction="#handleLogin"
                 style="-fx-background-color: #2196F3; -fx-text-fill: white; -fx-font-size: 13px; -fx-font-weight: bold; -fx-padding: 8 0 8 0; -fx-background-radius: 4; -fx-border-radius: 4; -fx-cursor: hand;" />
 

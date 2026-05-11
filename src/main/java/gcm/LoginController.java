@@ -180,10 +180,19 @@ public class LoginController {
     private void showError(String msg) {
         errorLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #ef233c;");
         errorLabel.setText(msg);
+        resizeToContent();
     }
 
     private void showLockout(String msg) {
         errorLabel.setStyle("-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #f77f00;");
         errorLabel.setText(msg);
+        resizeToContent();
+    }
+
+    private void resizeToContent() {
+        Platform.runLater(() -> {
+            javafx.stage.Stage s = (javafx.stage.Stage) errorLabel.getScene().getWindow();
+            s.sizeToScene();
+        });
     }
 }
