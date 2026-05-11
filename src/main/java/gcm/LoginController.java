@@ -101,6 +101,11 @@ public class LoginController {
     // ── Thread-safe state management ────────────────────────────────────────
 
     public static synchronized void recordFailedAttempt(String username) {
+        Long prev = lockoutUntil.get(username);
+        if (prev != null && System.currentTimeMillis() >= prev) {
+            failedAttempts.remove(username);
+            lockoutUntil.remove(username);
+        }
         int attempts = failedAttempts.getOrDefault(username, 0) + 1;
         failedAttempts.put(username, attempts);
         if (attempts >= maxAttempts) {
